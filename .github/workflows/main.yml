@@ -21,7 +21,6 @@ jobs:
       with:
         install: base-devel git mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-openssl mingw-w64-x86_64-qt5 mingw-w64-x86_64-ninja
 
-    
     - name: Install FastoGT (Step 1)
       run: git clone https://gitlab.com/fastogt/pyfastogt
 
@@ -31,10 +30,12 @@ jobs:
 
     - name: External libraries
       working-directory: build
+      shell: msys2 {0}
       run: python3 build_env.py
 
     - name: FastoNoSQL
       working-directory: build
+      shell: msys2 {0}
       run: python3 build.py ..
 
     - name: Upload build
