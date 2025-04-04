@@ -19,25 +19,30 @@ jobs:
     - name: Setup MSYS2
       uses: msys2/setup-msys2@v2
       with:
-        install: base-devel git mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-openssl mingw-w64-x86_64-qt5 mingw-w64-x86_64-ninja python python-pip python-setuptools
+        install: base-devel git mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-openssl mingw-w64-x86_64-qt5 mingw-w64-x86_64-ninja mingw-w64-python mingw-w64-python-pip
 
     - name: Install FastoGT (Step 1)
       run: git clone https://gitlab.com/fastogt/pyfastogt
-      
+
     - name: Install FastoGT (Step 2)
       working-directory: pyfastogt
       shell: msys2 {0}
-      run: python3 setup.py install
+      run: pip install setuptools --break-system-packages
+      
+    - name: Install FastoGT (Step 3)
+      working-directory: pyfastogt
+      shell: msys2 {0}
+      run: python setup.py install
 
     - name: External libraries
       working-directory: build
       shell: msys2 {0}
-      run: python3 build_env.py
+      run: python build_env.py
 
     - name: FastoNoSQL
       working-directory: build
       shell: msys2 {0}
-      run: python3 build.py ..
+      run: python build.py ..
 
     - name: Upload build
       uses: actions/upload-artifact@v4.3.6
