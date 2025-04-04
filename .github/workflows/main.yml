@@ -1,0 +1,38 @@
+name: Build and Upload rpk
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4.1.7
+
+    - name: Setup MSYS2
+      uses: msys2/setup-msys2@v2
+      with:
+        install: base-devel git mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-openssl mingw-w64-x86_64-qt5 mingw-w64-x86_64-ninja
+
+    - name: Enter build
+      run: cd build
+
+    - name: External libraries
+      run: python3 build_env.py
+
+    - name: FastoNoSQL
+      run: python3 build.py ..
+
+    
+    - name: Upload build
+      uses: actions/upload-artifact@v4.3.6
+      with:
+        name: Build
+        path: .
