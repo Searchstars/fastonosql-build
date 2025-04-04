@@ -26,6 +26,7 @@ jobs:
 
     - name: Install FastoGT (Step 2)
       working-directory: pyfastogt
+      shell: msys2 {0}
       run: python3 setup.py install
 
     - name: External libraries
