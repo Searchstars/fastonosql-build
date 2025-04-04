@@ -19,17 +19,12 @@ jobs:
     - name: Setup MSYS2
       uses: msys2/setup-msys2@v2
       with:
-        install: base-devel git mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-openssl mingw-w64-x86_64-qt5 mingw-w64-x86_64-ninja python python-pip
+        install: base-devel git mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-openssl mingw-w64-x86_64-qt5 mingw-w64-x86_64-ninja python python-pip python-setuptools
 
     - name: Install FastoGT (Step 1)
       run: git clone https://gitlab.com/fastogt/pyfastogt
-
-    - name: Install FastoGT (Step 2)
-      working-directory: pyfastogt
-      shell: msys2 {0}
-      run: pip install setuptools
       
-    - name: Install FastoGT (Step 3)
+    - name: Install FastoGT (Step 2)
       working-directory: pyfastogt
       shell: msys2 {0}
       run: python3 setup.py install
