@@ -27,7 +27,7 @@ jobs:
     - name: Install FastoGT (Step 2)
       working-directory: pyfastogt
       shell: msys2 {0}
-      run: pip install setuptools --break-system-packages
+      run: python -m pip install --upgrade pip setuptools --break-system-packages
       
     - name: Install FastoGT (Step 3)
       working-directory: pyfastogt
